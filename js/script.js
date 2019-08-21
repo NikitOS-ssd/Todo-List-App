@@ -4,14 +4,16 @@ setInterval(function() {
 }, 1)
 
 
-function changeTextName() {
-  var userName = document.querySelector('.user-name');
-  var textName = document.querySelector('.user-name-change');
-  textName.style.width = (userName.clientWidth + 20) + 'px';
+function changeTextName(elem) {
+  var textName = document.querySelector('.change-input');
+  textName.value = elem.innerHTML;
+  textName.style.width = (elem.clientWidth + 10) + 'px';
   textName.style.display = 'block';
-  textName.value = userName.innerHTML;
-  userName.style.display = 'none';
-  window.onkeypress = function() {changeName(event, userName, textName);};
+  textName.style.fontSize = getComputedStyle(elem).fontSize;
+  textName.style.fontWeight = getComputedStyle(elem).fontWeight;
+
+  elem.style.display = 'none';
+  window.onkeypress = function() {changeName(event, elem, textName);};
 }
 
 function changeName(event, userName, textName) {

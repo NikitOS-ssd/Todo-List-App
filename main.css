@@ -44,12 +44,10 @@ body {
   color: #fff;
   cursor: default;
 }
-.user-name-change {
+.change-input {
   margin-top: 8px;
   border: 2px solid black;
   background: none;
-  font-size: 22px;
-  font-weight: bold;
   display: none;
   border-radius: 7px;
   outline: 0;
@@ -57,7 +55,9 @@ body {
 }
 
 .user-status {
+  width: 80%;
   margin-top: 3px;
+  text-align: center;
   color: #fff;
   cursor: default;
 }
@@ -85,7 +85,6 @@ body {
 .button-delete {
   margin-top: 7px;
 }
-
 .control-button:hover {
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.3);
 }
@@ -95,13 +94,11 @@ body {
 .bodys-section {
   height: 100%;
   grid-column: 2;
-  /* border: 1px solid black; */
 }
 .top-bar {
   display: flex;
   width: 100%;
   padding-top: 25px;
-  /* border: 1px solid black; */
 }
 .search-list {
   width: 80%;
