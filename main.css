@@ -1,0 +1,67 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial;
+}
+
+/* ЛЕВАЯ ПАНЕЛЬ УПРАВЛЕНИЯ */
+.left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  float: left;
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  padding-top: 40px;
+  background: rgba(0, 9, 46);
+  background: -webkit-linear-gradient(50deg, rgba(0,9,46,1) 0%, rgba(56,126,218,1) 60%, rgba(83,221,97,1) 100%);
+  background: -o-linear-gradient(50deg, rgba(0,9,46,1) 0%, rgba(56,126,218,1) 60%, rgba(83,221,97,1) 100%);
+  background: linear-gradient(50deg, rgba(0,9,46,1) 0%, rgba(56,126,218,1) 60%, rgba(83,221,97,1) 100%);
+}
+.user-information {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  align-items: center;
+}
+.user-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+}
+.user-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #fff;
+}
+.user-status {
+  margin-top: 3px;
+  color: #fff;
+}
+
+.control-pannel {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+}
+.control-pannel > p:nth-child(1) {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 7px;
+}
+.control-button {
+  font-size: 18px;
+  border: none;
+  margin-top: 5px;
+  padding: 6px;
+  border-radius: 10px;
+  outline: 0;
+  cursor: pointer;
+}
