@@ -44,16 +44,6 @@ body {
   color: #fff;
   cursor: default;
 }
-.change-input {
-  margin-top: 8px;
-  border: 2px solid black;
-  background: none;
-  display: none;
-  border-radius: 7px;
-  outline: 0;
-  text-align: center;
-}
-
 .user-status {
   width: 80%;
   margin-top: 3px;
@@ -61,6 +51,16 @@ body {
   color: #fff;
   cursor: default;
 }
+.change-input {
+  margin-top: 8px;
+  border: 2px solid black;
+  display: none;
+  background: none;
+  border-radius: 7px;
+  outline: 0;
+  text-align: center;
+}
+
 
 .control-pannel {
   margin-top: 70px;
