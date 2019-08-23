@@ -28,7 +28,6 @@ function changeTextName(elem) {
 
 
 function setName(elem, input) {
-
   if (event.keyCode == 13) {
     input.style.display = 'none';
     elem.style.display = null;
