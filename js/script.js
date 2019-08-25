@@ -10,6 +10,7 @@ userName.addEventListener("click", function() {changeTextName(this)} );
 var userStatus = document.querySelector('.user-status');
 userStatus.addEventListener("click", function() {changeTextName(this)} );
 
+
 function changeTextName(elem) {
   var elemCss = getComputedStyle(elem);
 
@@ -19,11 +20,13 @@ function changeTextName(elem) {
   input.style.display = 'block';
   input.value = elem.innerHTML;
   input.focus();
+  input.select();
 
   elem.style.display = 'none';
 
   input.onkeydown = function() {setName(elem, input)};
   input.onblur = function() {noneSetName(elem, input)};
+
 }
 
 
@@ -37,10 +40,13 @@ function setName(elem, input) {
     elem.style.display = null;
     elem.innerHTML = elem.innerHTML;
   }
+
 }
 
-function noneSetName(elem, input) {
-  input.style.display = 'none';
-  elem.style.display = null;
-  elem.innerHTML = elem.innerHTML;
+numberOfLists();
+
+function numberOfLists() {
+  var allLists = document.querySelectorAll('.block-list');
+  var listsNumber = document.querySelector('.numb-of-lists');
+  listsNumber.innerHTML = allLists.length;
 }

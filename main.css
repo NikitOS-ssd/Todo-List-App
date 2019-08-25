@@ -100,6 +100,7 @@ body {
   display: flex;
   width: 100%;
   padding-left: 50px;
+  padding-right: 50px;
   padding-top: 25px;
   padding-bottom: 25px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
@@ -118,14 +119,35 @@ body {
 }
 
   /* блок со всеми list */
-
 .shower-all-list {
-  /* border: 2px solid black; */
   width: 100%;
-  height: 100%;
+  height: 1160px;
   padding-top: 20px;
   padding-left: 50px;
+  padding-right: 50px;
 }
 .shower-all-list h2 {
   text-transform: uppercase;
+}
+.info-about-list {
+
+}
+.info-about-list h2 {
+  display: inline-block;
+  margin-right: 20px;
+}
+.lists-block {
+  height: 100%;
+  /* border: 1px solid black; */
+  margin-top: 50px;
+  overflow: scroll;
+  transition: all 0.5s ease-out;
+}
+.block-list {
+  width: 300px;
+  height: 375px;
+  border: 3px solid #4acaa8;
+  border-radius: 7px;
+  display: inline-block;
+  margin: 0 2px;
 }
