@@ -29,7 +29,6 @@ function changeTextName(elem) {
 
 }
 
-
 function setName(elem, input) {
   if (event.keyCode == 13) {
     input.style.display = 'none';
@@ -43,8 +42,14 @@ function setName(elem, input) {
 
 }
 
-numberOfLists();
+function noneSetName(elem, input) {
+  input.style.display = 'none';
+  elem.style.display = null;
+  elem.innerHTML = elem.innerHTML;
+}
 
+
+numberOfLists();
 function numberOfLists() {
   var allLists = document.querySelectorAll('.block-list');
   var listsNumber = document.querySelector('.numb-of-lists');
