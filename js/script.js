@@ -55,3 +55,17 @@ function numberOfLists() {
   var listsNumber = document.querySelector('.numb-of-lists');
   listsNumber.innerHTML = allLists.length;
 }
+autoHeightBlockList();
+function autoHeightBlockList() {
+  var allList = document.querySelectorAll('.block-list');
+
+  for (var i = 0; i < allList.length; i++) {
+    var list = allList[i];
+    let img = list.querySelector('.img-list');
+    if (img) {
+      list.style.height = '350px';
+    } else {
+      continue;
+    }
+  }
+}

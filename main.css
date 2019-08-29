@@ -157,20 +157,22 @@ body {
 }
 .lists-block {
   height: 100%;
-  margin-top: 50px;
+  margin-top: 40px;
   overflow: scroll;
   transition: all 0.5s ease-out;
 }
 .block-list {
   width: 275px;
-  height: 350px;
+  height: auto;
+  max-height: 350px;
   border: 3px solid #4acaa8;
   border-radius: 7px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 0 2px;
+  margin: 2px;
+  margin-top: 15px;
   padding: 0px 10px;
   padding-top: 6px;
   padding-bottom: 13px;
@@ -192,6 +194,7 @@ body {
   width: 100%;
   height: auto;
   max-height: 130px;
+  /* display: none; */
 }
 .about-list {
   font-size: 17px;
@@ -211,6 +214,10 @@ body {
   cursor: pointer;
   text-transform: uppercase;
   font-size: 13px;
+  transition: all 0.2s ease;
+}
+.list-button:hover {
+  box-shadow: 0 0 7px 3px rgba(0, 0, 0, 0.4);
 }
 .show-list-button {
   background-color: rgba(56,126,218,1);
