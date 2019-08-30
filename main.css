@@ -155,18 +155,23 @@ body {
   display: inline-block;
   margin-right: 20px;
 }
+
+  /* list блоки */
 .lists-block {
   height: 100%;
   margin-top: 40px;
   overflow: scroll;
   transition: all 0.5s ease-out;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .block-list {
-  width: 275px;
+  width: 27%;
   height: auto;
-  max-height: 350px;
-  border: 3px solid #4acaa8;
-  border-radius: 7px;
+  max-width: 275px;
+  min-width: 250px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -176,6 +181,8 @@ body {
   padding: 0px 10px;
   padding-top: 6px;
   padding-bottom: 13px;
+  border: 3px solid #4acaa8;
+  border-radius: 7px;
 }
 .top-list-block {
   text-align: center;
@@ -224,4 +231,21 @@ body {
 }
 .complete-list-button {
   background-color: rgba(83,221,97,1);
+}
+
+
+
+
+
+
+@media (max-width: 1200px) {
+  .block-list {
+    width: 40%;
+    max-width: none;
+  }
+}
+@media (max-width: 1520px) {
+  .lists-block {
+    justify-content: space-around;
+  }
 }
