@@ -1,7 +1,7 @@
-setInterval(function() {
-  var autoHeight = window.innerHeight;
-  document.querySelector('.all-god').style.height = autoHeight + 'px';
-}, 1);
+// setInterval(function() {
+//   var autoHeight = window.innerHeight;
+//   document.querySelector('.all-god').style.height = autoHeight + 'px';
+// }, 1);
 
 
 var userName = document.querySelector('.user-name');
