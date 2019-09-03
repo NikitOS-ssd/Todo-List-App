@@ -17,10 +17,12 @@ app.get('/home', function(req, res) {
 });
 
 app.post('/login', urlencodedParser, function(req, res) {
-  if(!req.body) {
-    return res.sendStatus(400);
+  if(req.body.password == '') {
+    res.render('login.ejs');
   } else {
     console.log(req.body);
+    let signDate = new Date();
+    console.log(`${req.body.login} вошёл в систему в ${signDate.getHours()}:${signDate.getMinutes()}`);
 
     res.render('index.ejs', {userObj: req.body});
   }
