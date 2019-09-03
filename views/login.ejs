@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,22 +14,41 @@
       <div class="logo-block">
         <img src="https://www.ecopayz.com/media/6a89b009-2ef6-4fde-9a73-0a00f3e4122b/1oCGdw/img/download/ecoPayz%20logo%20withe" alt="">
       </div>
-      <div class="registration-block">
-        <h1>Sign in</h1>
-        <hr></hr>
-        <form class="registr-form" method="post" action="login">
-          <input type="text" name="login" placeholder="Enter your login...">
-          <input type="password" name="password" placeholder="Set your password...">
+      <div class="login-registration-block">
+        <div class="login-block">
+          <h1>Sign in</h1>
+          <hr></hr>
+          <form class="registr-form" method="post" action="/login">
+            <input type="text" name="login" placeholder="Enter your login...">
+            <input type="password" name="password" placeholder="Set your password...">
 
-          <button type="submit" class="login-button">sign in</button>
-        </form>
+            <button type="submit" class="login-button">sign in</button>
+          </form>
+        </div>
+        <div class="registration-block">
+          <h1>Registration</h1>
+          <hr></hr>
+          <form class="registr-form" method="post" action="/login">
+            <input type="text" name="login" placeholder="Enter your login...">
+            <input type="password" name="password" placeholder="Set your password...">
+            <input type="password" name="re-pass" placeholder="Reset youe password...">
+
+            <button type="submit" class="login-button">registration</button>
+          </form>
+        </div>
         <div class="rools-block">
           By logging in, you agree to the <br>
           <b>Terms and Conditions</b> and <b>Privacy Policy</b>.
         </div>
+        <div class="new-registr">
+          <a href="#" id="sign-button">sign in</a> |
+          <a href="#" id="registr-button">registration</a>
+          <br>
+          <a href="#">Forget your password?</a>
+        </div>
       </div>
     </div>
   </section>
-<!-- <script src="js/script.js"></script> -->
+<script src="js/login_script.js"></script>
 </body>
 </html>
