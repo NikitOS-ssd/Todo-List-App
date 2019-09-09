@@ -87,7 +87,7 @@ body {
   border-radius: 7px;
   outline: 0;
   cursor: pointer;
-  transition: all 0.2s ease-out;
+  transition: all 0.18s ease-out;
   margin: 7px auto;
 }
 .button-delete {

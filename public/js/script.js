@@ -24,10 +24,12 @@ function changeTextName(elem) {
 }
 
 function setName(elem, input) {
+  var logoutName = document.querySelector('.log-out-a > span');
   if (event.keyCode == 13) {
     input.style.display = 'none';
     elem.style.display = null;
     elem.innerHTML = input.value;
+    logoutName.innerHTML = input.value;
   } else if (event.keyCode == 27) {
     input.style.display = 'none';
     elem.style.display = null;
