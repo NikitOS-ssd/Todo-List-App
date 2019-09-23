@@ -29,13 +29,33 @@ function setName(elem, input) {
     input.style.display = 'none';
     elem.style.display = null;
     elem.innerHTML = input.value;
-    logoutName.innerHTML = input.value;
+
+    if (elem.className == 'user-name') {
+      logoutName.innerHTML = input.value;
+
+      let userName = document.querySelector('.user-name').innerHTML;
+
+      // сериализуем данные в json
+      let user = JSON.stringify({userName: userName});
+      let request = new XMLHttpRequest();
+
+      // посылаем запрос на адрес "/user"
+      request.open("POST", "/user", true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.addEventListener("load", function () {
+        // получаем и парсим ответ сервера
+        let receivedUser = JSON.parse(request.response);
+        // смотрим ответ сервера
+        console.log('Новое имя user`a: ' + receivedUser.userName);
+      });
+      request.send(user);
+    }
+
   } else if (event.keyCode == 27) {
     input.style.display = 'none';
     elem.style.display = null;
     elem.innerHTML = elem.innerHTML;
   }
-
 }
 
 function noneSetName(elem, input) {

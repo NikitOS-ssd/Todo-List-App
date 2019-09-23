@@ -1,4 +1,5 @@
 var fs = require('fs');
+var os = require('os');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -26,46 +27,22 @@ app.post('/login', urlencodedParser, function(req, res) {
     let signDate = new Date();
     console.log(`${req.body.login} вошёл в систему в ${signDate.getHours()}:${signDate.getMinutes()}`);
 
-    res.render('index.ejs', {userName: req.body.login});
+    res.render('index.ejs', {userName: req.body});
   }
 });
 
-var arrUser = {
-  'naruto777': {
-    name: 'Nikitos',
-    age: 19,
-    city: 'Moscow',
-    profession: 'programmist'
-  },
-  'tanya-tulpina': {
-    name: 'Tanya',
-    age: 19,
-    city: 'Stavropol',
-    profession: 'jurnalist'
-  }
-};
-
-
-const usersRouter = express.Router();
-
-usersRouter.use('/:userid/about', function(req, res) {
-  var userId = req.params.userid;
-  var info = '<ul>';
-  if (arrUser[userId]) {
-    for (var key in arrUser[userId]) {
-      info += `<li>${arrUser[userId][key]}</li>`;
-    }
-    info += '</ul>';
-    res.send(info);
-  } else {
-    res.sendStatus(404);
-  }
+app.get('/reseter', function(req, res) {
+  res.render('reseter.ejs');
 });
 
-usersRouter.use('/:userid/globaly', function(req, res) {
-  res.send(`Id - ${req.params.userid}`);
-});
+var jsonParser = express.json();
 
-app.use('/user', usersRouter);
+app.post("/user", jsonParser, function (req, res) {
+    var compuser = os.userInfo().username;
+    console.log(`Пользователь ${compuser} поменя логин на ${req.body.userName}`);
+    if(!req.body) return res.sendStatus(400);
+
+    res.json(req.body); // отправляем пришедший ответ обратно
+});
 
 app.listen(3030);
