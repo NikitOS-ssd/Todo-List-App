@@ -10,7 +10,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public')); //Подключает модули с CSS и JS к обычным файлам
 
-app.get('/', function(req, res) {
+app.get('/(*login)?', function(req, res) {
   res.render('login.ejs');
 });
 
@@ -31,18 +31,25 @@ app.post('/login', urlencodedParser, function(req, res) {
   }
 });
 
-app.get('/reseter', function(req, res) {
-  res.render('reseter.ejs');
-});
-
 var jsonParser = express.json();
 
 app.post("/user", jsonParser, function (req, res) {
     var compuser = os.userInfo().username;
-    console.log(`Пользователь ${compuser} поменя логин на ${req.body.userName}`);
+    console.log(`Пользователь ${compuser} поменял логин на ${req.body.userName}`);
+
     if(!req.body) return res.sendStatus(400);
 
     res.json(req.body); // отправляем пришедший ответ обратно
 });
 
-app.listen(3030);
+app.post("/timers", jsonParser, function(req, res) {
+  var compuser = os.userInfo().username;
+  console.log(`${compuser} поставил таймер на ${req.body.userTimer} секунды`);
+
+  if(!req.body) return res.sendStatus(400);
+
+  res.json(req.body);
+});
+
+
+app.listen(3000);

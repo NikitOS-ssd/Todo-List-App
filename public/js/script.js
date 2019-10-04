@@ -71,3 +71,29 @@ function numberOfLists() {
   var listsNumber = document.querySelector('.numb-of-lists');
   listsNumber.innerHTML = allLists.length;
 }
+
+
+var timerClick = document.querySelector('.timer');
+
+timerClick.addEventListener("dblclick", funSetTimer);
+
+function funSetTimer() {
+  let userTimer = timerClick.value;
+
+  let timer = JSON.stringify({userTimer: userTimer});
+  let request = new XMLHttpRequest();
+
+  request.open("POST", "/timers", true);
+  request.setRequestHeader("Content-Type", "application/json");
+  request.addEventListener("load", function () {
+
+    let recedive = JSON.parse(request.response);
+
+    alert('Установлен таймер на ' + recedive.userTimer + ' секунды');
+    timerClick.value = '';
+    setTimeout(function() {
+      alert('Таймер сработал');
+    }, +recedive.userTimer*1000);
+  });
+  request.send(timer);
+}

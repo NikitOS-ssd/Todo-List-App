@@ -12,7 +12,7 @@
     <div class="left-section">
       <div class="user-information">
         <img src="https://i.redd.it/pzfhsy53e9e01.png" class="user-img" alt="">
-        <p class="user-name"><%= userName.login %></p>
+        <p class="user-name"><%= userName.login || 'Unknown' %></p>
         <input type="text" class="change-input">
         <p class="user-status">Lorem ipsum dolor sit amet.</p>
       </div>
@@ -25,7 +25,7 @@
         <button class="control-button settings-button">Settings</button>
       </div>
       <div class="log-out-block">
-        <a href="#" class="log-out-a">Log out <span><%= userName.login %></span></a>
+        <a href="#" class="log-out-a">Log out <span><%= userName.login || 'Unknown' %></span></a>
       </div>
     </div>
 
@@ -69,10 +69,12 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
+      <input type="text" class="timer" placeholder="Установить таймер" name="timer">
     </section>
+
+
   </div>
 
 <script src="/js/script.js"></script>
