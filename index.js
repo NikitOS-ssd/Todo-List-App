@@ -8,7 +8,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public')); //Подключает модули с CSS и JS к обычным файлам
+app.use(express.static(__dirname + '/public')); //Подключает модули с CSS и JS к файлам EJS
 
 app.get('/(*login)?', function(req, res) {
   res.render('login.ejs');
@@ -50,6 +50,5 @@ app.post("/timers", jsonParser, function(req, res) {
 
   res.json(req.body);
 });
-
 
 app.listen(3000);

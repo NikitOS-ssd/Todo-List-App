@@ -1,3 +1,7 @@
+if(localStorage.getItem('user')) {
+  window.location.replace('http://localhost:3000/home');
+}
+
 var signButton = document.querySelector('#sign-button');
 var registrButton = document.querySelector('#registr-button');
 

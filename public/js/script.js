@@ -4,6 +4,23 @@ userName.addEventListener("click", function() {changeTextName(this)} );
 var userStatus = document.querySelector('.user-status');
 userStatus.addEventListener("click", function() {changeTextName(this)} );
 
+var logOut = document.querySelector('.log-out-a');
+logOut.addEventListener("click", systemAllOut);
+
+var newUser = {};
+
+if(!localStorage.getItem('user')) {
+  newUser.login = userName.innerHTML;
+  newUser.status = userStatus.innerHTML;
+
+  localStorage.setItem('user', JSON.stringify(newUser));
+} else {
+  var userCom = JSON.parse(localStorage.getItem('user'));
+  userName.textContent = userCom.login;
+  userStatus.textContent = userCom.status;
+  let logOutSpan = logOut.querySelector('span');
+  logOutSpan.textContent = userCom.login;
+}
 
 function changeTextName(elem) {
   var elemCss = getComputedStyle(elem);
@@ -33,28 +50,22 @@ function setName(elem, input) {
     if (elem.className == 'user-name') {
       logoutName.innerHTML = input.value;
 
-      let userName = document.querySelector('.user-name').innerHTML;
+      newUser.login = userName.innerHTML;
+      newUser.status = userStatus.innerHTML;
 
-      // сериализуем данные в json
-      let user = JSON.stringify({userName: userName});
-      let request = new XMLHttpRequest();
+      localStorage.setItem('user', JSON.stringify(newUser));
+      // console.log(JSON.stringify(newUser));
+    } else {
+      newUser.login = userName.innerHTML;
+      newUser.status = userStatus.innerHTML;
 
-      // посылаем запрос на адрес "/user"
-      request.open("POST", "/user", true);
-      request.setRequestHeader("Content-Type", "application/json");
-      request.addEventListener("load", function () {
-        // получаем и парсим ответ сервера
-        let receivedUser = JSON.parse(request.response);
-        // смотрим ответ сервера
-        console.log('Новое имя user`a: ' + receivedUser.userName);
-      });
-      request.send(user);
+      localStorage.setItem('user', JSON.stringify(newUser));
+      // console.log(JSON.stringify(newUser));
     }
 
   } else if (event.keyCode == 27) {
     input.style.display = 'none';
     elem.style.display = null;
-    elem.innerHTML = elem.innerHTML;
   }
 }
 
@@ -75,25 +86,44 @@ function numberOfLists() {
 
 var timerClick = document.querySelector('.timer');
 
-timerClick.addEventListener("dblclick", funSetTimer);
+timerClick.addEventListener("keypress", funSetTimer);
 
-function funSetTimer() {
-  let userTimer = timerClick.value;
+function funSetTimer(event) {
+  event = event || window.event;
+  if(event.key.toLowerCase() == 't') {
+    let userTimer = timerClick.value;
 
-  let timer = JSON.stringify({userTimer: userTimer});
-  let request = new XMLHttpRequest();
+    let timer = JSON.stringify({userTimer: userTimer});
+    let request = new XMLHttpRequest();
 
-  request.open("POST", "/timers", true);
-  request.setRequestHeader("Content-Type", "application/json");
-  request.addEventListener("load", function () {
+    request.open("POST", "/timers", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+      // получаем и парсим ответ сервера
+      let recedive = JSON.parse(request.response);
+      // смотрим ответ сервера
+      var tiktak = parseInt(recedive.userTimer);
+      timerClick.value = '';
+      if (tiktak > 0) {
+        alert('Установлен таймер на ' + tiktak + ' секунды');
+        setTimeout(function() {
+          alert('Таймер сработал');
+        }, tiktak*1000);
+      } else {
+        alert('Произошла ошибка. Попробуйте пожалуйста ещё раз');
+      }
 
-    let recedive = JSON.parse(request.response);
+    });
+    request.send(timer);
+  }
+}
 
-    alert('Установлен таймер на ' + recedive.userTimer + ' секунды');
-    timerClick.value = '';
-    setTimeout(function() {
-      alert('Таймер сработал');
-    }, +recedive.userTimer*1000);
-  });
-  request.send(timer);
+
+function systemAllOut() {
+  var outQuestion = confirm('Do you really want to leave');
+
+  if(outQuestion == true) {
+    localStorage.removeItem('user');
+    window.location.replace('http://localhost:3000/');
+  }
 }
