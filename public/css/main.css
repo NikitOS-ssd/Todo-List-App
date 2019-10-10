@@ -175,6 +175,7 @@ body {
 
   /* list блоки */
 .lists-block {
+  height: 80vh;
   margin-top: 40px;
   overflow: scroll;
   transition: all 0.5s ease-out;
@@ -182,28 +183,62 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  padding: 20px 0px;
 }
 .block-list {
+  position: relative;
   width: 27%;
-  height: auto;
+  height: 100vh;
   max-height: 346px;
-  max-width: 275px;
+  max-width: 290px;
   min-width: 250px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  display: inline;
   margin-right: 10px;
   margin-top: 15px;
-  padding: 0px 10px;
-  padding-top: 6px;
-  padding-bottom: 13px;
+  /* border: 3px solid #4acaa8; */
+  /* border-radius: 7px; */
+  /* overflow: hidden; */
+  perspective: 1000px;
+  user-select: none;
+}
+.block-list .front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: 1s;
+  backface-visibility: hidden;
   border: 3px solid #4acaa8;
   border-radius: 7px;
 }
+.block-list .front {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0px 10px;
+  padding-top: 6px;
+  padding-bottom: 10px;
+}
+.block-list .back {
+  display: flex;
+  padding: 10px 20px;
+  justify-content: center;
+  transform: rotateY(180deg);
+  background: linear-gradient(50deg, rgba(0,9,46,1) 0%, rgba(56,126,218,1) 60%, rgba(83,221,97,1) 100%);
+  color: white;
+}
+/* .block-list:hover .front {
+  transform: rotateY(180deg);
+}
+.block-list:hover .back {
+  transform: rotateY(360deg);
+} */
+
 .top-list-block {
   text-align: center;
   margin-bottom: 10px;
+  height: 50%;
 }
 .name-list {
   font-size: 25px;
@@ -249,11 +284,6 @@ body {
 .complete-list-button {
   background-color: rgba(83,221,97,1);
 }
-
-
-
-
-
 
 @media (max-width: 1200px) {
   .block-list {

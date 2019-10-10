@@ -125,3 +125,27 @@ function systemAllOut() {
     window.location.replace('http://localhost:3000/');
   }
 }
+
+
+// ПЕРЕВОРОТ КАРТОЧКИ
+var listBlock = document.querySelectorAll('.block-list');
+listBlock.forEach((item, index) => {
+  listBlock[index].addEventListener("dblclick", function() {listDeg(event)});
+});
+
+function listDeg(event) {
+  event = event || window.event;
+  var elem = event.target;
+
+  var buttonBlockProv = elem.closest('.button-block');
+  var prnts = elem.closest('.block-list');
+  if(!buttonBlockProv) {
+    if(!prnts.querySelector('.front').style.transform) {
+      prnts.querySelector('.front').style.transform = 'rotateY(180deg)';
+      prnts.querySelector('.back').style.transform = 'rotateY(360deg)';
+    } else {
+      prnts.querySelector('.front').style.transform = null;
+      prnts.querySelector('.back').style.transform = null;
+    }
+  }
+}
