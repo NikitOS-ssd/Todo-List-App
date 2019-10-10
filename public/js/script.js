@@ -15,11 +15,11 @@ if(!localStorage.getItem('user')) {
 
   localStorage.setItem('user', JSON.stringify(newUser));
 } else {
-  var userCom = JSON.parse(localStorage.getItem('user'));
-  userName.textContent = userCom.login;
-  userStatus.textContent = userCom.status;
+  newUser = JSON.parse(localStorage.getItem('user'));
+  userName.textContent = newUser.login;
+  userStatus.textContent = newUser.status;
   let logOutSpan = logOut.querySelector('span');
-  logOutSpan.textContent = userCom.login;
+  logOutSpan.textContent = newUser.login;
 }
 
 function changeTextName(elem) {
@@ -51,16 +51,14 @@ function setName(elem, input) {
       logoutName.innerHTML = input.value;
 
       newUser.login = userName.innerHTML;
-      newUser.status = userStatus.innerHTML;
 
       localStorage.setItem('user', JSON.stringify(newUser));
-      // console.log(JSON.stringify(newUser));
+      // console.log(newUser);
     } else {
-      newUser.login = userName.innerHTML;
       newUser.status = userStatus.innerHTML;
 
       localStorage.setItem('user', JSON.stringify(newUser));
-      // console.log(JSON.stringify(newUser));
+      // console.log(newUser);
     }
 
   } else if (event.keyCode == 27) {
