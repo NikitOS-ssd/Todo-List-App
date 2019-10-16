@@ -53,12 +53,10 @@ function setName(elem, input) {
       newUser.login = userName.innerHTML;
 
       localStorage.setItem('user', JSON.stringify(newUser));
-      // console.log(newUser);
     } else {
       newUser.status = userStatus.innerHTML;
 
       localStorage.setItem('user', JSON.stringify(newUser));
-      // console.log(newUser);
     }
 
   } else if (event.keyCode == 27) {
