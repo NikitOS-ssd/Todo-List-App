@@ -19,7 +19,7 @@ app.get('/home', function(req, res) {
 });
 
 app.post('/login', urlencodedParser, function(req, res) {
-  if(req.body.password == '') {
+  if(req.body.login == '' || req.body.password == '') {
     res.render('login.ejs');
     console.log('Вход не выполнен');
   } else {
