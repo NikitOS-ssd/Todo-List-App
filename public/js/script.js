@@ -1,3 +1,15 @@
+var listsArray = [
+  {id: 1, name: 'Number list №1', date: '20.04.19', img: 'https://propostuplenie.ru/website/navigator/var/custom/file/gbp-h.jpg', frontAbout: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum molestias nisi, expedita beatae dicta sapiente!', backAbout: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ratione excepturi odio consectetur fugiat molestias, tempore minus atque voluptatem asperiores facilis quaerat voluptatum, culpa sed nemo. Voluptatem incidunt, id numquam mollitia aspernatur vel officiis nulla? Doloremque, neque, nihil. Doloremque, cum, temporibus! Similique, nisi, fugit. Quis, magnam.'},
+  {id: 3, name: 'Number list №2', date: '22.04.19', img: 'https://propostuplenie.ru/website/navigator/var/custom/file/gbp-h.jpg', frontAbout: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur maxime similique fuga saepe eos totam.',  backAbout: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam ut minima veniam, expedita officia magni doloremque eaque perspiciatis amet quos possimus vitae nisi, ipsum laboriosam omnis repudiandae. Consectetur, sunt harum.'},
+  {id: 4, name: 'Make a website', date: '11.11.19', img: 'http://techrocks.ru/wp-content/uploads/2018/01/Novyj-gibkij-grafik.png', frontAbout: 'Lorem ipsum gate and name this.', backAbout: 'First elem of the september work, I need to make a good website for online shopping and investing'},
+  {id: 2, name: 'Learn programming', date: '07.12.19', img: 'http://techrocks.ru/wp-content/uploads/2018/01/Novyj-gibkij-grafik.png', frontAbout: 'Lorem ipsum gate and name this.', backAbout: 'Learn the basics of Swift. And practice JS language'}
+];
+
+listsArray.sort(function(a, b) {
+  return a.id - b.id;
+});
+
+
 var userName = document.querySelector('.user-name');
 userName.addEventListener("click", function() {changeTextName(this)} );
 
@@ -13,6 +25,7 @@ var newUser = {};
 if(!localStorage.getItem('user')) {
   newUser.login = userName.innerHTML;
   newUser.status = userStatus.innerHTML;
+  newUser.lists = listsArray;
 
   localStorage.setItem('user', JSON.stringify(newUser));
 } else {
@@ -44,8 +57,8 @@ function changeTextName(elem) {
 //ФУНКЦИЯ НОВОГО ИМЕНИ ИЛИ СТАТУСА
 function setName(elem, input) {
   var logoutName = document.querySelector('.log-out-a > span');
-
-  if (event.keyCode == 13) { //при нажатии на кнопку с кодом 13 (enter) данные сохраняются в хранилище
+  //при нажатии на кнопку с кодом 13 (enter) данные сохраняются в хранилище
+  if (event.keyCode == 13) {
     input.style.display = 'none';
     elem.style.display = null;
     elem.innerHTML = input.value;
@@ -62,8 +75,8 @@ function setName(elem, input) {
 
       localStorage.setItem('user', JSON.stringify(newUser));
     }
-
-  } else if (event.keyCode == 27) { //при нажатии на кнопку с кодом 27 (esc) данные не сохраняются
+    //при нажатии на кнопку с кодом 27 (esc) данные не сохраняются
+  } else if (event.keyCode == 27) {
     input.style.display = 'none';
     elem.style.display = null;
   }
@@ -76,14 +89,6 @@ function noneSetName(elem, input) {
   elem.innerHTML = elem.innerHTML;
 }
 
-//ПОДСЧЁТ ЗАДАЧ
-numberOfLists();
-function numberOfLists() {
-  var allLists = document.querySelectorAll('.block-list');
-  var listsNumber = document.querySelector('.numb-of-lists');
-  listsNumber.innerHTML = allLists.length;
-}
-
 
 var timerClick = document.querySelector('.timer');
 
@@ -92,10 +97,14 @@ timerClick.addEventListener("keypress", funSetTimer);
 //ФУНКЦИЯ AJAX ЗАПРОСА
 function funSetTimer(event) {
   event = event || window.event;
-  if(event.key.toLowerCase() == 't') { //если внутри поля нажата клавиша 't' начинается процесс
-    let userTimer = timerClick.value; //берём нужные данные
+  //если внутри поля нажата клавиша 't' начинается процесс
+  if(event.key.toLowerCase() == 't') {
+    //берём нужные данные
+    let userTimer = timerClick.value;
 
-    let timer = JSON.stringify({userTimer: userTimer}); //переводим передаваемые данные в JSON
+    //переводим передаваемые данные в JSON
+    let timer = JSON.stringify({userTimer: userTimer});
+
     //начинаем составлять запрос
     let request = new XMLHttpRequest();
 
@@ -120,6 +129,34 @@ function funSetTimer(event) {
     });
     request.send(timer);
   }
+}
+
+//ОТРИСОВКА КАРТОЧЕК
+showLists();
+function showLists() {
+  var newlist = document.querySelector('.block-list');
+  var listApp = document.querySelector('.lists-block');
+
+  for(var i = 0; i < newUser.lists.length; i++) {
+    newlist = newlist.cloneNode(true);
+    let listsParam = newUser.lists[i];
+    newlist.querySelector('.name-list').textContent = listsParam.name;
+    newlist.querySelector('.date-list').textContent = 'List start at: ' + listsParam.date;
+    newlist.querySelector('.img-list').textContent = listsParam.img;
+    newlist.querySelector('.about-list').textContent = listsParam.frontAbout;
+    newlist.querySelector('.back-about-list').textContent = listsParam.backAbout;
+    listApp.appendChild(newlist);
+  }
+  document.querySelector('.block-list').remove();
+}
+
+
+//ПОДСЧЁТ ЗАДАЧ
+numberOfLists();
+function numberOfLists() {
+  var allLists = document.querySelectorAll('.block-list');
+  var listsNumber = document.querySelector('.numb-of-lists');
+  listsNumber.innerHTML = allLists.length;
 }
 
 
