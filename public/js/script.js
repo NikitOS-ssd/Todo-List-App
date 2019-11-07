@@ -7,6 +7,7 @@ userStatus.addEventListener("click", function() {changeTextName(this)} );
 var logOut = document.querySelector('.log-out-a');
 logOut.addEventListener("click", systemAllOut);
 
+//берётся объект пользователя для работы с localStorage
 var newUser = {};
 
 if(!localStorage.getItem('user')) {
@@ -22,6 +23,7 @@ if(!localStorage.getItem('user')) {
   logOutSpan.textContent = newUser.login;
 }
 
+//ФУНКЦИЯ ДЛЯ ЗАМЕНЫ ПОЛЯ С ИМЕНЕМ ИЛИ СТАТУСОМ НА ПОЛЕ ВВОДА
 function changeTextName(elem) {
   var elemCss = getComputedStyle(elem);
 
@@ -37,16 +39,18 @@ function changeTextName(elem) {
 
   input.onkeydown = function() {setName(elem, input)};
   input.onblur = function() {noneSetName(elem, input)};
-
 }
 
+//ФУНКЦИЯ НОВОГО ИМЕНИ ИЛИ СТАТУСА
 function setName(elem, input) {
   var logoutName = document.querySelector('.log-out-a > span');
-  if (event.keyCode == 13) {
+
+  if (event.keyCode == 13) { //при нажатии на кнопку с кодом 13 (enter) данные сохраняются в хранилище
     input.style.display = 'none';
     elem.style.display = null;
     elem.innerHTML = input.value;
 
+    //в зависимости от класса заменяемого поля изменяются определённые данные в obj newUser
     if (elem.className == 'user-name') {
       logoutName.innerHTML = input.value;
 
@@ -59,12 +63,13 @@ function setName(elem, input) {
       localStorage.setItem('user', JSON.stringify(newUser));
     }
 
-  } else if (event.keyCode == 27) {
+  } else if (event.keyCode == 27) { //при нажатии на кнопку с кодом 27 (esc) данные не сохраняются
     input.style.display = 'none';
     elem.style.display = null;
   }
 }
 
+//ФУНКЦИЯ ОТМЕНЫ ИЗМЕНЕНИЙ ПРИ НАЖАТИИ НА ДРУГУЮ ЧАСТЬ СТРАНИЦЫ
 function noneSetName(elem, input) {
   input.style.display = 'none';
   elem.style.display = null;
@@ -84,20 +89,23 @@ var timerClick = document.querySelector('.timer');
 
 timerClick.addEventListener("keypress", funSetTimer);
 
+//ФУНКЦИЯ AJAX ЗАПРОСА
 function funSetTimer(event) {
   event = event || window.event;
-  if(event.key.toLowerCase() == 't') {
-    let userTimer = timerClick.value;
+  if(event.key.toLowerCase() == 't') { //если внутри поля нажата клавиша 't' начинается процесс
+    let userTimer = timerClick.value; //берём нужные данные
 
-    let timer = JSON.stringify({userTimer: userTimer});
+    let timer = JSON.stringify({userTimer: userTimer}); //переводим передаваемые данные в JSON
+    //начинаем составлять запрос
     let request = new XMLHttpRequest();
 
     request.open("POST", "/timers", true);
     request.setRequestHeader("Content-Type", "application/json");
+
     request.addEventListener("load", function () {
-      // получаем и парсим ответ сервера
+      // получаем и парсим ответ с сервера
       let recedive = JSON.parse(request.response);
-      // смотрим ответ сервера
+      // смотрим ответ сервера и работаем с ним
       var tiktak = parseInt(recedive.userTimer);
       timerClick.value = '';
       if (tiktak > 0) {
@@ -115,6 +123,7 @@ function funSetTimer(event) {
 }
 
 
+//ФУНКЦИЯ ПОЛНОГО ВЫХОДА ИЗ ПРИЛОЖЕНИЯ С УДАЛЕНИЕМ ДАННЫХ ИЗ localStorage
 function systemAllOut() {
   var outQuestion = confirm('Do you really want to leave');
 
