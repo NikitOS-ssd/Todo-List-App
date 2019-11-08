@@ -34,6 +34,8 @@ if(!localStorage.getItem('user')) {
   userStatus.textContent = newUser.status;
   let logOutSpan = logOut.querySelector('span');
   logOutSpan.textContent = newUser.login;
+
+  listsArray = newUser.lists;
 }
 
 //ФУНКЦИЯ ДЛЯ ЗАМЕНЫ ПОЛЯ С ИМЕНЕМ ИЛИ СТАТУСОМ НА ПОЛЕ ВВОДА
@@ -75,7 +77,7 @@ function setName(elem, input) {
 
       localStorage.setItem('user', JSON.stringify(newUser));
     }
-    //при нажатии на кнопку с кодом 27 (esc) данные не сохраняются
+  //при нажатии на кнопку с кодом 27 (esc) данные не сохраняются
   } else if (event.keyCode == 27) {
     input.style.display = 'none';
     elem.style.display = null;
@@ -88,6 +90,87 @@ function noneSetName(elem, input) {
   elem.style.display = null;
   elem.innerHTML = elem.innerHTML;
 }
+
+
+//ОТРИСОВКА КАРТОЧЕК
+showLists();
+function showLists() {
+  var newlist = document.querySelector('.block-list');
+  var listApp = document.querySelector('.lists-block');
+  listApp.innerHTML = '';
+  for(var i = 0; i < newUser.lists.length; i++) {
+    newlist = newlist.cloneNode(true);
+    let listsParam = newUser.lists[i];
+    newlist.querySelector('.name-list').textContent = listsParam.name;
+    newlist.querySelector('.date-list').textContent = 'List start at: ' + listsParam.date;
+    newlist.querySelector('.img-list').textContent = listsParam.img;
+    newlist.querySelector('.about-list').textContent = listsParam.frontAbout;
+    newlist.querySelector('.back-about-list').textContent = listsParam.backAbout;
+    listApp.appendChild(newlist);
+  }
+  // document.querySelector('.block-list').remove();
+}
+
+
+//ПОДСЧЁТ ЗАДАЧ
+numberOfLists();
+function numberOfLists() {
+  var allLists = document.querySelectorAll('.block-list');
+  var listsNumber = document.querySelector('.numb-of-lists');
+  listsNumber.innerHTML = allLists.length;
+}
+
+//ФУНКЦИЯ СОЗДАНИЯ ЗАДАЧИ И ДОБАВЛЕНИЯ В МАССИВ
+function MakeNewList(id, name, date, img, frontAbout, backAbout) {
+  this.id = listsArray[listsArray.length - 1].id + 1,
+  this.name = name,
+  this.date = date,
+  this.img = img,
+  this.frontAbout = frontAbout,
+  this.backAbout = backAbout
+
+  let newUser = JSON.parse(localStorage.getItem('user'));
+  newUser.lists.push(this);
+  localStorage.setItem('user', JSON.stringify(newUser));
+  showLists();
+}
+new MakeNewList(1, 'Ni', '21.22.33', 'imfh', 'lorem ispum 4 word', 'Text, is the first section in facebook site');
+
+
+//ФУНКЦИЯ ПОЛНОГО ВЫХОДА ИЗ ПРИЛОЖЕНИЯ С УДАЛЕНИЕМ ДАННЫХ ИЗ localStorage
+function systemAllOut() {
+  var outQuestion = confirm('Do you really want to leave');
+
+  if(outQuestion == true) {
+    localStorage.removeItem('user');
+    window.location.replace('http://localhost:3000/');
+  }
+}
+
+
+// ПЕРЕВОРОТ КАРТОЧКИ
+var listBlock = document.querySelectorAll('.block-list');
+listBlock.forEach((item, index) => {
+  listBlock[index].addEventListener("dblclick", function() {listDeg(event)});
+});
+
+function listDeg(event) {
+  event = event || window.event;
+  var elem = event.target;
+
+  var buttonBlockProv = elem.closest('.button-block');
+  var prnts = elem.closest('.block-list');
+  if(!buttonBlockProv) {
+    if(!prnts.querySelector('.front').style.transform) {
+      prnts.querySelector('.front').style.transform = 'rotateY(180deg)';
+      prnts.querySelector('.back').style.transform = 'rotateY(360deg)';
+    } else {
+      prnts.querySelector('.front').style.transform = null;
+      prnts.querySelector('.back').style.transform = null;
+    }
+  }
+}
+
 
 
 var timerClick = document.querySelector('.timer');
@@ -128,68 +211,5 @@ function funSetTimer(event) {
 
     });
     request.send(timer);
-  }
-}
-
-//ОТРИСОВКА КАРТОЧЕК
-showLists();
-function showLists() {
-  var newlist = document.querySelector('.block-list');
-  var listApp = document.querySelector('.lists-block');
-
-  for(var i = 0; i < newUser.lists.length; i++) {
-    newlist = newlist.cloneNode(true);
-    let listsParam = newUser.lists[i];
-    newlist.querySelector('.name-list').textContent = listsParam.name;
-    newlist.querySelector('.date-list').textContent = 'List start at: ' + listsParam.date;
-    newlist.querySelector('.img-list').textContent = listsParam.img;
-    newlist.querySelector('.about-list').textContent = listsParam.frontAbout;
-    newlist.querySelector('.back-about-list').textContent = listsParam.backAbout;
-    listApp.appendChild(newlist);
-  }
-  document.querySelector('.block-list').remove();
-}
-
-
-//ПОДСЧЁТ ЗАДАЧ
-numberOfLists();
-function numberOfLists() {
-  var allLists = document.querySelectorAll('.block-list');
-  var listsNumber = document.querySelector('.numb-of-lists');
-  listsNumber.innerHTML = allLists.length;
-}
-
-
-//ФУНКЦИЯ ПОЛНОГО ВЫХОДА ИЗ ПРИЛОЖЕНИЯ С УДАЛЕНИЕМ ДАННЫХ ИЗ localStorage
-function systemAllOut() {
-  var outQuestion = confirm('Do you really want to leave');
-
-  if(outQuestion == true) {
-    localStorage.removeItem('user');
-    window.location.replace('http://localhost:3000/');
-  }
-}
-
-
-// ПЕРЕВОРОТ КАРТОЧКИ
-var listBlock = document.querySelectorAll('.block-list');
-listBlock.forEach((item, index) => {
-  listBlock[index].addEventListener("dblclick", function() {listDeg(event)});
-});
-
-function listDeg(event) {
-  event = event || window.event;
-  var elem = event.target;
-
-  var buttonBlockProv = elem.closest('.button-block');
-  var prnts = elem.closest('.block-list');
-  if(!buttonBlockProv) {
-    if(!prnts.querySelector('.front').style.transform) {
-      prnts.querySelector('.front').style.transform = 'rotateY(180deg)';
-      prnts.querySelector('.back').style.transform = 'rotateY(360deg)';
-    } else {
-      prnts.querySelector('.front').style.transform = null;
-      prnts.querySelector('.back').style.transform = null;
-    }
   }
 }
