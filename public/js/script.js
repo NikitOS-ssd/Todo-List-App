@@ -117,35 +117,31 @@ numberOfLists();
 function numberOfLists() {
   var allLists = document.querySelectorAll('.block-list');
   var listsNumber = document.querySelector('.numb-of-lists');
-  listsNumber.innerHTML = allLists.length;
+  if(allLists.length == listsArray.length) {
+    listsNumber.innerHTML = allLists.length;
+  }
 }
 
 //ФУНКЦИЯ СОЗДАНИЯ ЗАДАЧИ И ДОБАВЛЕНИЯ В МАССИВ
 function MakeNewList(id, name, date, img, frontAbout, backAbout) {
-  this.id = listsArray[listsArray.length - 1].id + 1,
-  this.name = name,
-  this.date = date,
-  this.img = img,
-  this.frontAbout = frontAbout,
-  this.backAbout = backAbout
+  let vopros = confirm('', 'Вы хотите создать новую карточку?');
+  if(vopros) {
+    this.id = listsArray[listsArray.length - 1].id + 1,
+    this.name = name,
+    this.date = date,
+    this.img = img,
+    this.frontAbout = frontAbout,
+    this.backAbout = backAbout
 
-  let newUser = JSON.parse(localStorage.getItem('user'));
-  newUser.lists.push(this);
-  localStorage.setItem('user', JSON.stringify(newUser));
-  showLists();
-}
-new MakeNewList(1, 'Ni', '21.22.33', 'imfh', 'lorem ispum 4 word', 'Text, is the first section in facebook site');
-
-
-//ФУНКЦИЯ ПОЛНОГО ВЫХОДА ИЗ ПРИЛОЖЕНИЯ С УДАЛЕНИЕМ ДАННЫХ ИЗ localStorage
-function systemAllOut() {
-  var outQuestion = confirm('Do you really want to leave');
-
-  if(outQuestion == true) {
-    localStorage.removeItem('user');
-    window.location.replace('http://localhost:3000/');
+    newUser = JSON.parse(localStorage.getItem('user'));
+    newUser.lists.push(this);
+    localStorage.setItem('user', JSON.stringify(newUser));
+    listsArray = newUser.lists;
+    showLists();
+    numberOfLists();
   }
 }
+new MakeNewList(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
 
 
 // ПЕРЕВОРОТ КАРТОЧКИ
@@ -170,7 +166,6 @@ function listDeg(event) {
     }
   }
 }
-
 
 
 var timerClick = document.querySelector('.timer');
@@ -211,5 +206,16 @@ function funSetTimer(event) {
 
     });
     request.send(timer);
+  }
+}
+
+
+//ФУНКЦИЯ ПОЛНОГО ВЫХОДА ИЗ ПРИЛОЖЕНИЯ С УДАЛЕНИЕМ ДАННЫХ ИЗ localStorage
+function systemAllOut() {
+  var outQuestion = confirm('Do you really want to leave');
+
+  if(outQuestion == true) {
+    localStorage.removeItem('user');
+    window.location.replace('http://localhost:3000/');
   }
 }
