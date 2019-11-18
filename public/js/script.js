@@ -19,6 +19,7 @@ userStatus.addEventListener("click", function() {changeTextName(this)} );
 var logOut = document.querySelector('.log-out-a');
 logOut.addEventListener("click", systemAllOut);
 
+
 //берётся объект пользователя для работы с localStorage
 var newUser = {};
 
@@ -122,8 +123,8 @@ function numberOfLists() {
   }
 }
 
-//ФУНКЦИЯ СОЗДАНИЯ ЗАДАЧИ И ДОБАВЛЕНИЯ В МАССИВ
-function MakeNewList(id, name, date, img, frontAbout, backAbout) {
+//ОБЪЕКТ LIST КОТОРЫЙ ПОТОМ ДОБАВЛЯЕТСЯ В МАССИВ ЗАДАЧ
+function List(id, name, date, img, frontAbout, backAbout) {
   let vopros = confirm('', 'Вы хотите создать новую карточку?');
   if(vopros) {
     this.id = listsArray[listsArray.length - 1].id + 1,
@@ -133,7 +134,7 @@ function MakeNewList(id, name, date, img, frontAbout, backAbout) {
     this.frontAbout = frontAbout,
     this.backAbout = backAbout
 
-    newUser = JSON.parse(localStorage.getItem('user'));
+    // newUser = JSON.parse(localStorage.getItem('user')); //можно использовать для достоверности инфы о user
     newUser.lists.push(this);
     localStorage.setItem('user', JSON.stringify(newUser));
     listsArray = newUser.lists;
@@ -141,7 +142,40 @@ function MakeNewList(id, name, date, img, frontAbout, backAbout) {
     numberOfLists();
   }
 }
-new MakeNewList(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
+new List(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
+
+//ВЕШАЕТ КАЖДОЙ КНОПКЕ COMPLETE СОБЫТИЕ ОТСЛЕЖИВАЮЩЕЕ ЗАВЕРШЕНИЕ ЗАДАЧИ
+getCompleteFunction();
+function getCompleteFunction() {
+  var completeListButton = document.querySelectorAll('.complete-list-button');
+  completeListButton.forEach((item, index) => {
+    completeListButton[index].addEventListener("click", () => {completeList(event)});
+  });
+
+  console.log('События переданы');
+}
+
+//ФУНКЦИЯ ЗАВЕРШЕНИЯ ЗАДАЧИ И ПОСЛЕДУЮЩЕГО ИЗМЕНЕНИЯ ХРАНИЛИЩА
+function completeList(event) {
+  event = event || window.event;
+  var elem = event.target;
+  var parentElem = elem.closest('.block-list');
+  var nameList = parentElem.querySelector('.name-list').innerHTML;
+
+  console.log(nameList);
+
+  const result = listsArray.findIndex(list => list.name === nameList);
+
+  if(result > -1) {
+    listsArray.splice(result, 1);
+    // parentElem.remove();
+    console.log(listsArray);
+    newUser.lists = listsArray;
+    localStorage.setItem('user', JSON.stringify(newUser));
+    showLists();
+    getCompleteFunction();
+  }
+}
 
 
 // ПЕРЕВОРОТ КАРТОЧКИ
