@@ -92,16 +92,66 @@ function noneSetName(elem, input) {
   elem.innerHTML = elem.innerHTML;
 }
 
+//ДОБАВЛЕНИЕ НОВОГО LIST
+var addListButton = document.querySelector('.button-add');
+addListButton.addEventListener("click", openModalBlock);
+
+function openModalBlock() {
+  modalBlock.style.display = 'block';
+  setTimeout(() => {
+    modalBlock.style.opacity = '1';
+  }, 1);
+}
+
+var modalBlock = document.querySelector('.modal');
+modalBlock.addEventListener("click", noneNewList);
+
+function noneNewList(event) {
+  event = event || window.event;
+  var elem = event.target;
+
+  if(elem.className == 'modal') {
+    modalBlock.style.opacity = 0;
+    setTimeout(() => {
+      modalBlock.style.display = 'none';
+      modalBlock.style.opacity = '0.1';
+    }, 500);
+  }
+
+}
+
+//ПОИСКОВАЯ СТРОКА ДЛЯ ЗАДАЧ
+var searcherInput = document.querySelector('.search-list');
+searcherInput.addEventListener("input", searchList);
+
+function searchList() {
+  var poisk = this.value.toLowerCase();
+  var searchElements = document.querySelectorAll('.name-list');
+  var blockList = document.querySelectorAll('.block-list');
+
+  for(var i = 0; i < searchElements.length; i++) {
+    let name = searchElements[i].innerHTML.toLowerCase();
+
+    if(name.indexOf(poisk) > -1) {
+      blockList[i].style.display = 'block';
+    } else {
+      blockList[i].style.display = 'none';
+    }
+  }
+}
 
 //ОТРИСОВКА КАРТОЧЕК
 showLists();
 function showLists() {
   var newlist = document.querySelector('.block-list');
   var listApp = document.querySelector('.lists-block');
+
   listApp.innerHTML = '';
+
   for(var i = 0; i < newUser.lists.length; i++) {
     newlist = newlist.cloneNode(true);
     let listsParam = newUser.lists[i];
+
     newlist.querySelector('.name-list').textContent = listsParam.name;
     newlist.querySelector('.date-list').textContent = 'List start at: ' + listsParam.date;
     newlist.querySelector('.img-list').textContent = listsParam.img;
@@ -125,7 +175,7 @@ function numberOfLists() {
 
 //ОБЪЕКТ LIST КОТОРЫЙ ПОТОМ ДОБАВЛЯЕТСЯ В МАССИВ ЗАДАЧ
 function List(id, name, date, img, frontAbout, backAbout) {
-  let vopros = confirm('', 'Вы хотите создать новую карточку?');
+  // let vopros = confirm('', 'Вы хотите создать новую карточку?');
   if(vopros) {
     this.id = listsArray[listsArray.length - 1].id + 1,
     this.name = name,
@@ -138,11 +188,13 @@ function List(id, name, date, img, frontAbout, backAbout) {
     newUser.lists.push(this);
     localStorage.setItem('user', JSON.stringify(newUser));
     listsArray = newUser.lists;
+    //функция отображания всех задач в карточки
     showLists();
+    //функция подсчёта незаконченных задач
     numberOfLists();
   }
 }
-new List(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
+// new List(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
 
 //ВЕШАЕТ КАЖДОЙ КНОПКЕ COMPLETE СОБЫТИЕ ОТСЛЕЖИВАЮЩЕЕ ЗАВЕРШЕНИЕ ЗАДАЧИ
 getCompleteFunction();
@@ -174,16 +226,21 @@ function completeList(event) {
     localStorage.setItem('user', JSON.stringify(newUser));
     showLists();
     getCompleteFunction();
+    numberOfLists();
+    getTurnFunCard();
   }
 }
 
+//ПРИСВАИВАНИЕ КАЖДОЙ КАРТОЧКЕ ФУНКЦИЮ
+getTurnFunCard();
+function getTurnFunCard() {
+  var listBlock = document.querySelectorAll('.block-list');
+  listBlock.forEach((item, index) => {
+    listBlock[index].addEventListener("dblclick", function() {listDeg(event)});
+  });
+}
 
 // ПЕРЕВОРОТ КАРТОЧКИ
-var listBlock = document.querySelectorAll('.block-list');
-listBlock.forEach((item, index) => {
-  listBlock[index].addEventListener("dblclick", function() {listDeg(event)});
-});
-
 function listDeg(event) {
   event = event || window.event;
   var elem = event.target;
