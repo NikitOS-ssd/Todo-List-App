@@ -5,6 +5,8 @@ var listsArray = [
   {id: 2, name: 'Learn programming', date: '07.12.19', img: 'http://techrocks.ru/wp-content/uploads/2018/01/Novyj-gibkij-grafik.png', frontAbout: 'Lorem ipsum gate and name this.', backAbout: 'Learn the basics of Swift. And practice JS language'}
 ];
 
+var completeListsArray = [];
+
 listsArray.sort(function(a, b) {
   return a.id - b.id;
 });
@@ -27,6 +29,7 @@ if(!localStorage.getItem('user')) {
   newUser.login = userName.innerHTML;
   newUser.status = userStatus.innerHTML;
   newUser.lists = listsArray;
+  newUser.completeLists = completeListsArray;
 
   localStorage.setItem('user', JSON.stringify(newUser));
 } else {
@@ -37,6 +40,7 @@ if(!localStorage.getItem('user')) {
   logOutSpan.textContent = newUser.login;
 
   listsArray = newUser.lists;
+  completeListsArray = newUser.completeLists;
 }
 
 //ФУНКЦИЯ ДЛЯ ЗАМЕНЫ ПОЛЯ С ИМЕНЕМ ИЛИ СТАТУСОМ НА ПОЛЕ ВВОДА
@@ -97,7 +101,7 @@ var addListButton = document.querySelector('.button-add');
 addListButton.addEventListener("click", openModalBlock);
 
 function openModalBlock() {
-  modalBlock.style.display = 'block';
+  modalBlock.style.display = 'flex';
   setTimeout(() => {
     modalBlock.style.opacity = '1';
   }, 1);
@@ -117,7 +121,34 @@ function noneNewList(event) {
       modalBlock.style.opacity = '0.1';
     }, 500);
   }
+}
 
+var addNewListButton = document.querySelector('.modal-list-button');
+addNewListButton.addEventListener("click", newListAdd);
+
+function newListAdd() {
+  let listName = document.querySelector('.list-name').value;
+  let listFirstAbout = document.querySelector('.list-first-about').value;
+  let listSecondAbout= document.querySelector('.list-second-about').value;
+
+  var nowDate = new Date();
+  nowDate = `${nowDate.getDate()}.${nowDate.getMonth()}.${nowDate.getYear()}`;
+
+  console.log(listName);
+  console.log(listFirstAbout);
+  console.log(listSecondAbout);
+
+  new List(listName, nowDate, listFirstAbout, listSecondAbout);
+
+  modalBlock.style.opacity = 0;
+  setTimeout(() => {
+    modalBlock.style.display = 'none';
+    modalBlock.style.opacity = '0.1';
+  }, 500);
+
+  listName.value = '';
+  listFirstAbout.value = '';
+  listSecondAbout.value = '';
 }
 
 //ПОИСКОВАЯ СТРОКА ДЛЯ ЗАДАЧ
@@ -173,16 +204,29 @@ function numberOfLists() {
   }
 }
 
+numbertOfCompleteLists();
+function numbertOfCompleteLists() {
+  var completeListText = document.querySelector('.numb-complete-list');
+
+  if(newUser.completeLists != 0 || !newUser.completeLists) {
+    completeListText.innerHTML = newUser.completeLists.length;
+  }
+}
+
+
 //ОБЪЕКТ LIST КОТОРЫЙ ПОТОМ ДОБАВЛЯЕТСЯ В МАССИВ ЗАДАЧ
-function List(id, name, date, img, frontAbout, backAbout) {
-  // let vopros = confirm('', 'Вы хотите создать новую карточку?');
+function List(name, date, frontAbout, backAbout) {
+  let vopros = confirm('', 'Вы хотите создать новую карточку?');
+
   if(vopros) {
     this.id = listsArray[listsArray.length - 1].id + 1,
     this.name = name,
     this.date = date,
-    this.img = img,
+    this.img = 'img',
     this.frontAbout = frontAbout,
     this.backAbout = backAbout
+
+    console.log(this);
 
     // newUser = JSON.parse(localStorage.getItem('user')); //можно использовать для достоверности инфы о user
     newUser.lists.push(this);
@@ -192,6 +236,10 @@ function List(id, name, date, img, frontAbout, backAbout) {
     showLists();
     //функция подсчёта незаконченных задач
     numberOfLists();
+    //добавляет функцию каждой кнопке в новосозданных list'ах
+    getCompleteFunction();
+    //добавляет функцию переворота карточки в новосозданных list'ах
+    getTurnFunCard();
   }
 }
 // new List(1, 'Ni', '21.22.33', 'imfh', 'lorem ipsum 4 word', 'Text, is the first section in facebook site');
@@ -203,8 +251,6 @@ function getCompleteFunction() {
   completeListButton.forEach((item, index) => {
     completeListButton[index].addEventListener("click", () => {completeList(event)});
   });
-
-  console.log('События переданы');
 }
 
 //ФУНКЦИЯ ЗАВЕРШЕНИЯ ЗАДАЧИ И ПОСЛЕДУЮЩЕГО ИЗМЕНЕНИЯ ХРАНИЛИЩА
@@ -219,14 +265,18 @@ function completeList(event) {
   const result = listsArray.findIndex(list => list.name === nameList);
 
   if(result > -1) {
+    completeListsArray.push(listsArray[result]);
     listsArray.splice(result, 1);
     // parentElem.remove();
-    console.log(listsArray);
+    newUser.completeLists = completeListsArray;
     newUser.lists = listsArray;
+
     localStorage.setItem('user', JSON.stringify(newUser));
+    console.log(newUser);
     showLists();
     getCompleteFunction();
     numberOfLists();
+    numbertOfCompleteLists();
     getTurnFunCard();
   }
 }
