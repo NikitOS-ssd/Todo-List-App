@@ -138,6 +138,10 @@ function newListAdd() {
   console.log(listFirstAbout);
   console.log(listSecondAbout);
 
+  listName.value = '';
+  listFirstAbout.value = '';
+  listSecondAbout.value = '';
+
   new List(listName, nowDate, listFirstAbout, listSecondAbout);
 
   modalBlock.style.opacity = 0;
@@ -146,9 +150,7 @@ function newListAdd() {
     modalBlock.style.opacity = '0.1';
   }, 500);
 
-  listName.value = '';
-  listFirstAbout.value = '';
-  listSecondAbout.value = '';
+
 }
 
 //ПОИСКОВАЯ СТРОКА ДЛЯ ЗАДАЧ
