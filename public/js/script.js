@@ -177,6 +177,8 @@ function searchList() {
 showLists();
 function showLists() {
   var newlist = document.querySelector('.block-list');
+  newlist.querySelector('.front').style = null;
+  newlist.querySelector('.back').style = null;
   var listApp = document.querySelector('.lists-block');
 
   listApp.innerHTML = '';
