@@ -93,7 +93,6 @@ function setName(elem, input) {
 function noneSetName(elem, input) {
   input.style.display = 'none';
   elem.style.display = null;
-  elem.innerHTML = elem.innerHTML;
 }
 
 //ДОБАВЛЕНИЕ НОВОГО LIST
@@ -104,7 +103,7 @@ function openModalBlock() {
   modalBlock.style.display = 'flex';
   setTimeout(() => {
     modalBlock.style.opacity = '1';
-  }, 1);
+  }, 0);
 }
 
 var modalBlock = document.querySelector('.modal');
@@ -132,7 +131,7 @@ function newListAdd() {
   let listSecondAbout= document.querySelector('.list-second-about').value;
 
   var nowDate = new Date();
-  nowDate = `${nowDate.getDate()}.${nowDate.getMonth()}.${nowDate.getYear()}`;
+  nowDate = `${nowDate.getDate()}.${nowDate.getMonth()}.${nowDate.getFullYear()}`;
 
   console.log(listName);
   console.log(listFirstAbout);
@@ -218,7 +217,7 @@ function numbertOfCompleteLists() {
 
 //ОБЪЕКТ LIST КОТОРЫЙ ПОТОМ ДОБАВЛЯЕТСЯ В МАССИВ ЗАДАЧ
 function List(name, date, frontAbout, backAbout) {
-  let vopros = confirm('', 'Вы хотите создать новую карточку?');
+  let vopros = confirm('Вы хотите создать новую карточку?', '');
 
   if(vopros) {
     this.id = listsArray[listsArray.length - 1].id + 1,
@@ -260,7 +259,7 @@ function completeList(event) {
   event = event || window.event;
   var elem = event.target;
   var parentElem = elem.closest('.block-list');
-  var nameList = parentElem.querySelector('.name-list').innerHTML;
+  var nameList = parentElem.querySelector('.name-list').textContent;
 
   console.log(nameList);
 
@@ -312,7 +311,6 @@ function listDeg(event) {
 
 
 var timerClick = document.querySelector('.timer');
-
 timerClick.addEventListener("keypress", funSetTimer);
 
 //ФУНКЦИЯ AJAX ЗАПРОСА

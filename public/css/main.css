@@ -244,15 +244,12 @@ body {
   position: relative;
   width: 27%;
   height: 100vh;
-  max-height: 346px;
+  max-height: 330px;
   max-width: 290px;
   min-width: 250px;
   display: inline;
   margin-right: 10px;
   margin-top: 15px;
-  /* border: 3px solid #4acaa8; */
-  /* border-radius: 7px; */
-  /* overflow: hidden; */
   perspective: 1000px;
   user-select: none;
 }
@@ -262,7 +259,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  transition: 0.7s;
+  transition: 0.8s;
   backface-visibility: hidden;
   border: 3px solid #4acaa8;
   border-radius: 7px;
@@ -296,18 +293,18 @@ body {
   height: 50%;
 }
 .name-list {
-  font-size: 25px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 2px;
 }
 .date-list {
-  font-size: 15px;
+  font-size: 14px;
   text-align: center;
 }
 .img-list {
   width: 100%;
   height: auto;
-  max-height: 125px;
+  max-height: 135px;
   /* display: none; */
 }
 .about-list {
@@ -331,7 +328,7 @@ body {
   transition: all 0.2s ease;
 }
 .list-button:hover {
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.4);
 }
 .show-list-button {
   background-color: rgba(56,126,218,1);
